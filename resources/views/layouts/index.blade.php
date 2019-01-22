@@ -56,19 +56,25 @@
 
                     <header>
                         <h2 class="alt">Hi!  <strong>Make new transaction</strong></h2><br/>
-                     <form autocomplete="off" action="/action_page.php">
+                     <form autocomplete="off" action="{{route('maketrans')}}" method = "POST">
             <div class="autocomplete" style="width:300px;">
             <input id="myInput" type="text" name="name" placeholder="Name">
-            <input id = "amount" type = "hidden" placeholder = "amount to send">
+            <input id = "amount" type = "hidden" name = "amount" placeholder = "amount to send">
+            <input id = "userName" type = "hidden" name = "userName" value = {{$userName}}>
+
+            <input id = "submit" type = "hidden" placeholder = "Submit">
             <!-- <input type="submit" value = "next" onclick  = "next()"> -->
             <a  onclick = "next()">next</a>
             </div>
+            {{ csrf_field() }} 
 
             </form>              
              <br/>     
             <div style="display:none;">   
                         @foreach($users['data'] as $i => $v)
-                      <h6 class = "users">  {{$v['name']}}</h6> <br/>
+                      <h6 class = "users">  {{$v['name']}}</h6> 
+                      
+                      <br/>
                         @endforeach
                         </div>
                     </header>

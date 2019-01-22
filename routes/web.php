@@ -21,3 +21,4 @@ Route::get('/ololo',function()
 {
     return UserResource::collection(User::all());
 })->name('ololo');
+Route::post('/transaction', 'TransController@maketrans')->name('maketrans');

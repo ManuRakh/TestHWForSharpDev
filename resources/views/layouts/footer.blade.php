@@ -19,20 +19,44 @@ function next()
     if(document.getElementById('myInput').value.length ==0) 
     {alert("Please first write the name!");
     }
+
   else 
   {
       if(counter ==0 )  
-  {
-      document.getElementById('amount').type = 'text';
+  {   var error = 0 ;
+      for(var k = 0 ; k<users.length;k++)
+  {     error = 1;
+        if(document.getElementById('myInput').value==users[k]) 
+        {   error = 0;
+            break; }
+  }
+  
+  if(error == 0) document.getElementById('amount').type = 'number';
+  else {
+      alert("Name should be taken from the autocomplete list!");
+        counter--;
+        }
   }
   if(counter==1)
   {
     var balance = parseInt(document.getElementById('balance').innerHTML);
    var  inputAmount = parseInt(document.getElementById('amount').value);
+  
     var diff = balance-inputAmount;
     console.log(diff);
-    if(diff<0) alert('your balance does not allow you to complete this transaction, please enter a number that is not higher than your own balance');
+    if(diff<0) 
+    {
+        alert('your balance does not allow you to complete this transaction, please enter a number that is not higher than your own balance');
+    }
+   
+    else if(diff=>0)
+    {
+        document.getElementById('submit').type = 'submit';
+    }
+   
+  
   }
+
 }
 counter++;
 
@@ -180,6 +204,10 @@ input {
   font-size: 16px;
 }
 input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+input[type=number] {
   background-color: #f1f1f1;
   width: 100%;
 }
