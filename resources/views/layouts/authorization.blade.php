@@ -60,7 +60,7 @@
                                 <textarea name="message" placeholder="Message"></textarea>
                             </div> -->
                             <div class="col-12">
-                                <input type="submit" value="Sign in" />
+                                <input id = "submitreglogin" type="submit" value="Sign in" />
                             </div>
                         <!-- </div> -->
                         {{ csrf_field() }} 
@@ -85,7 +85,7 @@
 
                     <p>Don't have an acoount? Sign up now!</p>
 
-                    <form method="POST" action="{{route('reg')}}">
+                    <form method="POST"  action="{{route('reg')}}" >
                         <!-- <div class="row"> -->
                            <div class="col-6 col-12-mobile"><input id = "userName" type="text" name="userName" placeholder="Your User Name"  /></div>
 
@@ -95,8 +95,9 @@
                             <!-- <div class="col-12">
                                 <textarea name="message" placeholder="Message"></textarea>
                             </div> -->
+                            <input id = "balance" type="hidden" name="balance" value = '500' />
                             <div class="col-12">
-                                <input type="submit" value="Sign up" />
+                                <input type="submit" id = "submitreg" value="Sign up" />
                             </div>
                         <!-- </div> -->
                         {{ csrf_field() }} 

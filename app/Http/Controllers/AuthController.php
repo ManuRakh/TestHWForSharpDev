@@ -24,14 +24,16 @@ public function registration(Request $request)
     $user->fill($data);
    // $user->fill($data);
     $user->save();
+        $request->session()->put('userId',$user->id);
+        $request->session()->put('auth','true');
+        $request->session()->put('userName',$input->userName);
+        $request->session()->put('email',$input->email);
+        $request->session()->put('balance',$input->balance);
 
-    $request->session()->put('auth','true');
-    $request->session()->put('userName',$input->userName);
-    $request->session()->put('email',$input->email);
     //$request->session()->put('balance',0);
 
-    //echo $request->session()->get('auth');
-    return redirect('/');
+    echo $request->session()->get('auth');
+   return redirect('/');
 }
 public function index()
 {
@@ -46,7 +48,7 @@ public function login(Request $request)
         'password'=>'required|min:6',
     ]
     );
-    $user = User::select('email','userName', 'password','balance')->where('email',$request->input('email'))->first();
+    $user = User::select('email','userName', 'password','balance','id')->where('email',$request->input('email'))->first();
     if($user==null)
     {
         return back();
@@ -56,11 +58,12 @@ public function login(Request $request)
       $password = ($user1->password);
       if($hisPass==$password)
       {
+        $request->session()->put('userId',$user1->id);
         $request->session()->put('auth','true');
         $request->session()->put('userName',$user1->userName);
         $request->session()->put('email',$user1->email);
         $request->session()->put('balance',$user1->balance);
-            return redirect('/');
+        return redirect('/');
       }
       else
       {

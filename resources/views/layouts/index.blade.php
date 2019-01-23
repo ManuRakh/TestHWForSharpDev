@@ -91,59 +91,49 @@
                 <div class="container">
 
                     <header>
-                        <h2>Portfolio</h2>
+                        <h2> Send transactions</h2>
                     </header>
 
-                    <p>Vitae natoque dictum etiam semper magnis enim feugiat convallis convallis
-                    egestas rhoncus ridiculus in quis risus amet curabitur tempor orci penatibus.
-                    Tellus erat mauris ipsum fermentum etiam vivamus eget. Nunc nibh morbi quis
-                    fusce hendrerit lacus ridiculus.</p>
+                  <table id="transactionsTable" style = "cursor: pointer;">
+                 <tr>
+                  <th onclick="sortTable(0)">User Name of Sender</th>
+                  <th onclick="sortTable(1)">Receiver's name</th>
+                  <th onclick="sortTable(2)">Amount</th>
+                  <th onclick="sortTable(3)">Balance after transaction</th>
+                  <th onclick="sortTable(4)">Date</th>
+                  </tr>
+                  @foreach($transaction as $transsend)
+                  <tr> <td>{{$userName}}</td>
+                  <td> {{$transsend->userName}} </td>
+                  <td> {{$transsend->amount}}</td>
+                  <td> {{$transsend->leftamount}} </td>
+                  <td> {{$transsend->created_at}}</td>
+                  </tr>
+                    @endforeach
+                  </table>
+                  <header>
+                        <h2>Taken transactions</h2>
+                    </header>
+                    <table id = "transactionsTable" style = "cursor: pointer;">
+                    <tr>
+                  <th onclick="sortTable(0)">User Name of Receiver</th>
+                  <th onclick="sortTable(1)">Sender's name</th>
+                  <th onclick="sortTable(2)">Amount</th>
+                  <th onclick="sortTable(3)">Balance after transaction</th>
+                  <th onclick="sortTable(4)">Date</th>
+                  </tr>
+                  @foreach($transactionreceived as $transrec)
+                  <tr> 
+                  <td>{{$userName}}</td>
+                  <td> {{$transrec->userName}} </td>
+                  <td> {{$transrec->amount}}</td>
+                  <td> {{$transrec->current_balance}} </td>
+                  <td> {{$transrec->created_at}}</td>
 
-                    <div class="row">
-                        <div class="col-4 col-12-mobile">
-                            <article class="item">
-                                <a href="#" class="image fit"><img src="{{asset('public/images/pic02.jpg')}}" alt="" /></a>
-                                <header>
-                                    <h3>Ipsum Feugiat</h3>
-                                </header>
-                            </article>
-                            <article class="item">
-                                <a href="#" class="image fit"><img src="{{asset('public/images/pic03.jpg')}}"  alt="" /></a>
-                                <header>
-                                    <h3>Rhoncus Semper</h3>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="col-4 col-12-mobile">
-                            <article class="item">
-                                <a href="#" class="image fit"><img src="{{asset('public/images/pic04.jpg')}}"  alt="" /></a>
-                                <header>
-                                    <h3>Magna Nullam</h3>
-                                </header>
-                            </article>
-                            <article class="item">
-                                <a href="#" class="image fit"><img src="{{asset('public/images/pic05.jpg')}}"  alt="" /></a>
-                                <header>
-                                    <h3>Natoque Vitae</h3>
-                                </header>
-                            </article>
-                        </div>
-                        <div class="col-4 col-12-mobile">
-                            <article class="item">
-                                <a href="#" class="image fit"><img src="{{asset('public/images/pic06.jpg')}}"  alt="" /></a>
-                                <header>
-                                    <h3>Dolor Penatibus</h3>
-                                </header>
-                            </article>
-                            <article class="item">
-                                <a href="#" class="image fit"><img src="{{asset('public/images/pic07.jpg')}}"  alt="" /></a>
-                                <header>
-                                    <h3>Orci Convallis</h3>
-                                </header>
-                            </article>
-                        </div>
-                    </div>
+                  </tr>
+                  @endforeach
 
+                  </table>
                 </div>
             </section>
 

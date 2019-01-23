@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Transaction;
+use App\Transactionsreceive;
 
 class IndexController extends Controller
 {
 
 public function index()
 {
-    $jsonurl=route('ololo');
+    $jsonurl=route('ololo');//get users list from API
     $json = file_get_contents($jsonurl);
     $users = json_decode($json, true); 
     // foreach($data['data'] as $i => $v)
@@ -22,19 +24,33 @@ public function index()
     $userName = '';
     $email = '';
     $balance = '';
-    if(session()->has("auth"))
+    $userId= '';
+    if(session()->has("auth"))//check for authorization. If authorized - get session datas, if not - redirect to sign in/sign up page
     {
+        
         $auth=session()->get('auth');
         $userName=session()->get('userName');
         $email=session()->get('email');
         $balance=session()->get('balance');
-
+        $userId = session()->get('userId');
     }
      else
     {
     $auth = session()->put('auth','false');
     }
-    
+    if(session()->get('auth')=='false')
+    {
+        return redirect('/login');
+
+    }
+    $transaction = new Transaction;
+    $transaction = \DB::table('transactions')->where('transactions.userid',$userId)
+   
+    ->join('users as u','u.id','=','transactions.towhom')
+    ->get();
+    $transactionreceived = \DB::table('transactionsreceives')->where('transactionsreceives.fromwhom',$userId)
+    ->join('users as u','u.id','=','transactionsreceives.userid')
+    ->get();
     
     return  view('index')->with(
         [
@@ -43,6 +59,8 @@ public function index()
             'email'=>$email,
             'balance'=>$balance,
             'users'=>$users,
+            'transaction'=>$transaction,
+            'transactionreceived'=>$transactionreceived,
         ]
     );
 }
