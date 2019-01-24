@@ -70,4 +70,9 @@ public function login(Request $request)
           return back();
       }
 }
+function logout()
+{
+    session()->flush();
+    return redirect('/');
+}
 }

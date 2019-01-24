@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Transaction;
 use App\Transactionsreceive;
+use App\Banlist;
 
 class IndexController extends Controller
 {
 
 public function index()
 {
-    $jsonurl=route('ololo');//get users list from API
+    $jsonurl=route('usersList');//get users list from API
     $json = file_get_contents($jsonurl);
     $users = json_decode($json, true); 
     // foreach($data['data'] as $i => $v)
@@ -19,12 +20,13 @@ public function index()
     //     echo $v['email'].'<br/>';
     // }
 
-
     $auth='';
     $userName = '';
     $email = '';
     $balance = '';
     $userId= '';
+    $userBanned = false;
+
     if(session()->has("auth"))//check for authorization. If authorized - get session datas, if not - redirect to sign in/sign up page
     {
         
@@ -51,16 +53,24 @@ public function index()
     $transactionreceived = \DB::table('transactionsreceives')->where('transactionsreceives.fromwhom',$userId)
     ->join('users as u','u.id','=','transactionsreceives.userid')
     ->get();
-    
+    $banusers=Banlist::all();
+foreach($banusers as $banuser)
+{
+if($banuser->userid==$userId) {$userBanned=true;}
+else {$userBanned=false;}
+}
     return  view('index')->with(
         [
             'auth'=>$auth,
             'userName'=>$userName,
+            'userId'=>$userId,
             'email'=>$email,
             'balance'=>$balance,
             'users'=>$users,
             'transaction'=>$transaction,
             'transactionreceived'=>$transactionreceived,
+            'userBanned'=>$userBanned,
+
         ]
     );
 }

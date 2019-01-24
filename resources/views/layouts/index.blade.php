@@ -1,6 +1,7 @@
 
 	<body class="is-preload">
 
+
 <!-- Header -->
     <div id="header">
 
@@ -17,13 +18,11 @@
             <!-- Nav -->
                 <nav id="nav">
                     <ul>
-                        <li><a href="#top" id="top-link"><span class="icon fa-home">Intro</span></a></li>
-                        <li><a href="#portfolio" id="portfolio-link"><span class="icon fa-th">Portfolio</span></a></li>
-                        <li><a href="#about" id="about-link"><span class="icon fa-user">About Me</span></a></li>
-                        <li><a href="#contact" id="contact-link"><span class="icon fa-envelope">Contact</span></a></li>
-                @if($auth=="false")
-                <li><a href="#registration" id="contact-link"><span class="icon fa-envelope">Registration</span></a></li>
-                @endif
+                        <li><a href="#MakeTransaction" id="top-link"><span class="icon fa-home">MakeTransaction</span></a></li>
+                        <li><a href="#Senttransactions" id="portfolio-link"><span class="icon fa-th">Sent transactions</span></a></li>
+                        <li><a href="#TakenTransactions" id="about-link"><span class="icon fa-user">Taken Transactions</span></a></li>
+                        <li><a href="#logout" id="contact-link" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><span class="icon fa-envelope">Log out</span></a></li>
+             
 
 
 
@@ -50,8 +49,10 @@
 <!-- Main -->
     <div id="main">
 
-        <!-- Intro -->
-            <section id="top" class="one dark cover">
+        <!-- MakeTransaction -->
+        @if($userBanned!=true)
+
+            <section id="MakeTransaction" class="one dark cover">
                 <div class="container">
 
                     <header>
@@ -86,21 +87,21 @@
                 </div>
             </section>
 
-        <!-- Portfolio -->
-            <section id="portfolio" class="two">
+        <!-- Sent transactions -->
+            <section id="Senttransactions" class="two">
                 <div class="container">
 
                     <header>
-                        <h2> Send transactions</h2>
+                        <h2> Sent transactions</h2>
                     </header>
 
-                  <table id="transactionsTable" style = "cursor: pointer;">
+                  <table id="transactionsTable">
                  <tr>
-                  <th onclick="sortTable(0)">User Name of Sender</th>
-                  <th onclick="sortTable(1)">Receiver's name</th>
-                  <th onclick="sortTable(2)">Amount</th>
-                  <th onclick="sortTable(3)">Balance after transaction</th>
-                  <th onclick="sortTable(4)">Date</th>
+                  <th onclick="sortTable(0)"  style = "cursor: pointer;">User Name of Sender</th>
+                  <th onclick="sortTable(1)"  style = "cursor: pointer;">Receiver's name</th>
+                  <th onclick="sortTable(2)"  style = "cursor: pointer;">Amount</th>
+                  <th onclick="sortTable(3)"  style = "cursor: pointer;">Balance after transaction</th>
+                  <th onclick="sortTable(4)"  style = "cursor: pointer;">Date</th>
                   </tr>
                   @foreach($transaction as $transsend)
                   <tr> <td>{{$userName}}</td>
@@ -111,16 +112,24 @@
                   </tr>
                     @endforeach
                   </table>
-                  <header>
+               
+                </div>
+            </section>
+
+        <!-- Taken transactions -->
+            <section id="TakenTransactions" class="three">
+                <div class="container">
+
+                      <header>
                         <h2>Taken transactions</h2>
                     </header>
-                    <table id = "transactionsTable" style = "cursor: pointer;">
+                    <table id = "transactionsTable" >
                     <tr>
-                  <th onclick="sortTable(0)">User Name of Receiver</th>
-                  <th onclick="sortTable(1)">Sender's name</th>
-                  <th onclick="sortTable(2)">Amount</th>
-                  <th onclick="sortTable(3)">Balance after transaction</th>
-                  <th onclick="sortTable(4)">Date</th>
+                  <th onclick="sortTable(0)" style = "cursor: pointer;">User Name of Receiver</th>
+                  <th onclick="sortTable(1)" style = "cursor: pointer;">Sender's name</th>
+                  <th onclick="sortTable(2)" style = "cursor: pointer;">Amount</th>
+                  <th onclick="sortTable(3)" style = "cursor: pointer;">Balance after transaction</th>
+                  <th onclick="sortTable(4)" style = "cursor: pointer;">Date</th>
                   </tr>
                   @foreach($transactionreceived as $transrec)
                   <tr> 
@@ -134,89 +143,21 @@
                   @endforeach
 
                   </table>
-                </div>
-            </section>
-
-        <!-- About Me -->
-            <section id="about" class="three">
-                <div class="container">
-
-                    <header>
                     
-
-                        <h2>About Me</h2>
-                    </header>
-
-                    <a href="#" class="image featured"><img src="{{asset('public/images/pic08.jpg')}}" alt="" /></a>
-
-                    <p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus
-                    ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae
-                    laoreet eget cubilia quam non etiam odio tincidunt montes. Elementum sem
-                    parturient nulla quam placerat viverra mauris non cum elit tempus ullamcorper
-                    dolor. Libero rutrum ut lacinia donec curae mus vel quisque sociis nec
-                    ornare iaculis.</p>
-
-                </div>
-            </section>
-
-        <!-- Contact -->
-            <section id="contact" class="four">
-                <div class="container">
-
-                    <header>
-                        <h2>Contact</h2>
-                    </header>
-
-                    <p>Elementum sem parturient nulla quam placerat viverra
-                    mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-                    donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-                    orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
-
-                    <form method="post" action="#">
-                        <div class="row">
-                            <div class="col-6 col-12-mobile"><input type="text" name="name" placeholder="Name" /></div>
-                            <div class="col-6 col-12-mobile"><input type="text" name="email" placeholder="Email" /></div>
-                            <div class="col-12">
-                                <textarea name="message" placeholder="Message"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <input type="submit" value="Send Message" />
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </section>
-            @if($auth=="false")
-            <section id="registration" class="four">
-                <div class="container">
-
-                    <header>
-                        <h2>registration</h2>
-                    </header>
-
-                    <p>Elementum sem parturient nulla quam placerat viverra
-                    mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-                    donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-                    orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
-
-                    <form method="POST" action="{{route('pageauth')}}">
-                        <!-- <div class="row"> -->
-                            <div class="col-6 col-12-mobile"><input id = "email" type="text" name="email" placeholder="Email" onchange="validateEmail(this.value)" /></div>
-                            <br/>
-                            <div class="col-6 col-12-mobile"><input id = "password" type="text" name="password" placeholder="Password" onchange="validatePass(this.value)" /></div>
-                            <!-- <div class="col-12">
-                                <textarea name="message" placeholder="Message"></textarea>
-                            </div> -->
-                            <div class="col-12">
-                                <input type="submit" value="Send Message" />
-                            </div>
-                        <!-- </div> -->
-                        {{ csrf_field() }} 
-
-                    </form>
-
-                </div>
             </section>
             @endif
+            @if($userBanned==true)
+            <section id="Users" class="one dark cover">
+
+         <th>   Sorry, but this user are Banned!!!</th>
+            </section>
+            @endif
+
+       <section id = "logout" style ="display:none">
+       <form id = "logout-form" method = "POST" action = "{{route('logout')}}">
+       {{ csrf_field() }} 
+
+       </form>
+       </section>
+           
     </div>

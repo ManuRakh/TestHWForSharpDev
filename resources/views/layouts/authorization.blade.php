@@ -87,7 +87,7 @@
 
                     <form method="POST"  action="{{route('reg')}}" >
                         <!-- <div class="row"> -->
-                           <div class="col-6 col-12-mobile"><input id = "userName" type="text" name="userName" placeholder="Your User Name"  /></div>
+                           <div class="col-6 col-12-mobile"><input id = "userName" type="text" name="userName" placeholder="Your User Name" onchange="validateUserName(this.value)" /></div>
 
                             <div class="col-6 col-12-mobile"><input id = "email" type="text" name="email" placeholder="Email" onchange="validateEmail(this.value)" /></div>
                             <br/>

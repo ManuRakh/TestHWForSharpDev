@@ -17,8 +17,12 @@ Route::get('/', 'IndexController@index')->name('index');
 Route::get('/login', 'AuthController@index')->name('pageauth');
 Route::post('/login', 'AuthController@login')->name('login');
 Route::post('/reg', 'AuthController@registration')->name('reg');
-Route::get('/ololo',function()
+Route::post('/logout','AuthController@logout')->name('logout');
+Route::get('/usersList',function()
 {
     return UserResource::collection(User::all());
-})->name('ololo');
+})->name('usersList');
 Route::post('/transaction', 'TransController@maketrans')->name('maketrans');
+Route::get('/admin', 'AdminController@index')->name('adminpage');
+Route::post('/admin', 'AdminController@admin')->name('admin');
+Route::get('/adminPage','AdminController@adminPage')->name('adminPage');
