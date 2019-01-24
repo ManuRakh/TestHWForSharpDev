@@ -26,7 +26,10 @@ public function index()
     $balance = '';
     $userId= '';
     $userBanned = false;
-
+        if(session()->get('role')=='admin')
+        {
+            return redirect('/adminPage');
+        }
     if(session()->has("auth"))//check for authorization. If authorized - get session datas, if not - redirect to sign in/sign up page
     {
         
@@ -50,8 +53,8 @@ public function index()
    
     ->join('users as u','u.id','=','transactions.towhom')
     ->get();
-    $transactionreceived = \DB::table('transactionsreceives')->where('transactionsreceives.fromwhom',$userId)
-    ->join('users as u','u.id','=','transactionsreceives.userid')
+    $transactionreceived = \DB::table('transactionsreceives')->where('transactionsreceives.userid',$userId)
+    ->join('users as u','u.id','=','transactionsreceives.fromwhom')
     ->get();
     $banusers=Banlist::all();
 foreach($banusers as $banuser)
@@ -59,6 +62,7 @@ foreach($banusers as $banuser)
 if($banuser->userid==$userId) {$userBanned=true;}
 else {$userBanned=false;}
 }
+
     return  view('index')->with(
         [
             'auth'=>$auth,

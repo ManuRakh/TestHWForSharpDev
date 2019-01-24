@@ -18,6 +18,10 @@ Route::get('/login', 'AuthController@index')->name('pageauth');
 Route::post('/login', 'AuthController@login')->name('login');
 Route::post('/reg', 'AuthController@registration')->name('reg');
 Route::post('/logout','AuthController@logout')->name('logout');
+Route::post('/banuser','AuthController@banuser')->name('banuser');
+
+Route::post('/unbanuser','AuthController@unbanuser')->name('unbanuser');
+
 Route::get('/usersList',function()
 {
     return UserResource::collection(User::all());

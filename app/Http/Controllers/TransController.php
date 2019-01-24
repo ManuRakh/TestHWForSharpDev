@@ -17,7 +17,10 @@ public function maketrans(Request $request)
         $user->balance=$newBalance;
         $user->save();
         $user = User::all()->where("userName",$request->userName)->first();
-
+        if(session()->get('userName')==$request->name)
+        {       
+                return $request->userName;
+        }
                 //add transaction to receiver's history
 
         $transaction = new Transactionsreceive;

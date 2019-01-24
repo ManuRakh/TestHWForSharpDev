@@ -42,6 +42,10 @@
                <th onclick="sortTable(1)" style = "cursor: pointer;"> User Name</th>
                <th onclick="sortTable(2)" style = "cursor: pointer;">User Current amount of Money</th>
                <th onclick="sortTable(3)" style = "cursor: pointer;">Date of registration</th>
+               <th onclick="sortTable(4)" style = "cursor: pointer;">User bans</th>
+               <th onclick="sortTable(4)" style = "cursor: pointer;">User unbans</th>
+
+
                </tr>
                @foreach($users as $user)
                <tr>
@@ -49,6 +53,25 @@
                <td style="color:#FFA100;">{{$user->userName}}</td>
                <td style="color:#FFA100;"> {{$user->balance}}</td>
                <td style="color:#FFA100;">{{$user->created_at}}</td>
+               <td >  <a style="color:red;" onclick="event.preventDefault();document.getElementById('ban-form').submit();"> Bane this user</a> </td>
+                <form  id = "ban-form" action="{{route('banuser')}}" method = "POST">
+
+                <input type="hidden" name = "userid" value ="{{$user->id}}" >
+                {{ csrf_field() }} 
+
+                </form>
+               <td >  
+               <a style="color:red;" onclick="event.preventDefault();document.getElementById('unbanuser-form').submit();"> 
+               If this user are banned. Click to unbane him
+               </a> 
+               </td>
+                <form  id = "unbanuser-form" action="{{route('unbanuser')}}" method = "POST">
+                <input type="hidden" name = "userid" value ="{{$user->id}}" >
+                {{ csrf_field() }} 
+                </form>
+                
+               
+
                 </tr>
                 @endforeach
 

@@ -57,6 +57,8 @@
 
                     <header>
                         <h2 class="alt">Hi!  <strong>Make new transaction</strong></h2><br/>
+                        <h4>Note that if you send money to yourself, nothing will change
+</h4><br/>
                      <form autocomplete="off" action="{{route('maketrans')}}" method = "POST">
             <div class="autocomplete" style="width:300px;">
             <input id="myInput" type="text" name="name" placeholder="Name">

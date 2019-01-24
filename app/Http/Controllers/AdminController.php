@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Admin;
 use App\User;
 use App\Transaction;
+use App\Banlist;
 
 class AdminController extends Controller
 {
@@ -38,6 +39,7 @@ public function adminPage()
 {   
     $user = User::all();
     $transaction = Transaction::all();
+    $banlist = Banlist::all();
     if(session()->get('role')!='admin')
     {
         return redirect('admin');
@@ -46,6 +48,7 @@ public function adminPage()
         [
             'users'=>$user,
             'transactions'=>$transaction,
+            'banlists'=>$banlist,
         ]
     );
 }
